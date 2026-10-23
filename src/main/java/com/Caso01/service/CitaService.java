@@ -1,13 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.Caso01.service;
 
-/**
- *
- * @author adria
- */
+import com.Caso01.domain.Cita;
+import com.Caso01.repository.CitaRepository;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@RequiredArgsConstructor
 public class CitaService {
+    private final CitaRepository citaRepository;
     
+    @Transactional(readOnly = true)
+    public List<Cita> listar() {
+        return citaRepository.findAll();
+    }
 }

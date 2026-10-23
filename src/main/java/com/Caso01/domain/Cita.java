@@ -1,13 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.Caso01.domain;
 
-/**
- *
- * @author adria
- */
+import jakarta.persistence.*;
+import java.time.LocalDate;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Table(name = "cita")
+@Getter
+@Setter
 public class Cita {
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String nombreMascota;
+    private String nombrePropietario;
+    private LocalDate fecha;
+    @ManyToOne
+    @JoinColumn(name = "servicio_id")
+    private Servicio servicio;
 }
