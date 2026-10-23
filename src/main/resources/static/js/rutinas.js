@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
 
     const modalTipo = document.getElementById("tipoServicioModal");
@@ -28,9 +27,30 @@ document.addEventListener("DOMContentLoaded", function () {
             const nombre = boton.getAttribute("data-nombre");
             document.getElementById("idEliminar").value = id;
             document.getElementById("formEliminar").action =
-                "/tipoServicio/eliminar";
+                boton.getAttribute("data-action") || "/tipoServicio/eliminar";
             document.getElementById("mensajeEliminar").textContent =
-                "¿Deseas eliminar el tipo de servicio " + nombre + "?";
+                "¿Deseas eliminar el registro: " + nombre + "?";
+        });
+    }
+    
+    const modalServicio = document.getElementById("servicioModal");
+    if (modalServicio) {
+        modalServicio.addEventListener("show.bs.modal", function (event) {
+            const boton = event.relatedTarget;
+            const modo = boton.getAttribute("data-modo");
+            document.getElementById("servicioModalTitulo").textContent =
+                boton.getAttribute("data-titulo");
+            document.getElementById("servicioId").value =
+                modo === "editar" ? boton.getAttribute("data-id") : "";
+            document.getElementById("servicioNombre").value =
+                modo === "editar" ? boton.getAttribute("data-nombre") : "";
+            document.getElementById("servicioPrecio").value =
+                modo === "editar" ? boton.getAttribute("data-precio") : "";
+            document.getElementById("servicioDuracion").value =
+                modo === "editar" ? boton.getAttribute("data-duracion") : "";
+            document.getElementById("servicioTipo").value =
+                modo === "editar" ? boton.getAttribute("data-tipo-id") : "";
         });
     }
 });
+

@@ -26,27 +26,22 @@
         <a class="navbar-brand"
            th:href="@{/}"
            th:text="#{nav.inicio}"></a>
-
-        <div class="navbar-nav">
-            <a class="nav-link"
-               th:href="@{/tipoServicio}"
-               th:text="#{nav.tiposServicio}"></a>
-
-            <a class="nav-link"
-               th:href="@{/servicio}"
-               th:text="#{nav.servicios}"></a>
-
-            <a class="nav-link"
-               th:href="@{/cita/listado}"
-               th:text="#{nav.citas}"></a>
-
-            <a class="nav-link"
-               th:href="@{/contacto}"
-               th:text="#{nav.contacto}"></a>
-        </div>
+            <div class="navbar-nav">
+                <a class="nav-link"
+                   th:href="@{/tipoServicio}"
+                   th:text="#{nav.tiposServicio}"></a>
+                <a class="nav-link"
+                   th:href="@{/servicio/listado}"
+                   th:text="#{nav.servicios}"></a>
+                <a class="nav-link"
+                   th:href="@{/cita/listado}"
+                   th:text="#{nav.citas}"></a>
+                <a class="nav-link"
+                   th:href="@{/contacto}"
+                   th:text="#{nav.contacto}"></a>
+            </div>   
     </div>
 </nav>
-
 <!-- Footer -->
 <footer th:fragment="footer"
         class="container-fluid bg-info text-white text-center p-3">
