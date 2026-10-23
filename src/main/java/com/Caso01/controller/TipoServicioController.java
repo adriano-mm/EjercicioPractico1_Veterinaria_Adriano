@@ -13,26 +13,34 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/tipo-servicio")
+@RequestMapping("/tipoServicio")
 public class TipoServicioController {
     private final TipoServicioService tipoServicioService;
-
-    @GetMapping
-    public String listar(Model model) {
+    private void cargarListado(Model model) {
         var tipos = tipoServicioService.listar();
         model.addAttribute("tipos", tipos);
         model.addAttribute("totalTipos", tipos.size());
-        return "tipo-servicio/listado";
     }
 
+    @GetMapping
+    public String listar(Model model) {
+        cargarListado(model);
+        if (!model.containsAttribute("tipoServicio")) {
+            model.addAttribute("tipoServicio", new TipoServicio());
+        }
+        return "tipoServicio/listado";
+    }
+    
     @GetMapping("/nuevo")
     public String nuevo(Model model) {
+        cargarListado(model);
         model.addAttribute("tipoServicio", new TipoServicio());
-        return "tipo-servicio/formulario";
+        return "tipoServicio/listado";
     }
 
     @GetMapping("/editar/{id}")
@@ -44,10 +52,11 @@ public class TipoServicioController {
         if (resultado.isEmpty()) {
             redirectAttributes.addFlashAttribute(
                     "error", "Tipo de servicio no encontrado.");
-            return "redirect:/tipo-servicio";
+            return "redirect:/tipoServicio";
         }
+        cargarListado(model);
         model.addAttribute("tipoServicio", resultado.get());
-        return "tipo-servicio/formulario";
+        return "tipoServicio/listado";
     }
 
     @PostMapping("/guardar")
@@ -57,7 +66,8 @@ public class TipoServicioController {
             Model model,
             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            return "tipo-servicio/formulario";
+            cargarListado(model);
+            return "tipoServicio/listado";
         }
         boolean nuevo = tipoServicio.getId() == null;
         try {
@@ -67,16 +77,17 @@ public class TipoServicioController {
                     : "Tipo de servicio actualizado correctamente.";
             redirectAttributes.addFlashAttribute("todoOk", mensaje);
         } catch (DataIntegrityViolationException e) {
+            cargarListado(model);
             model.addAttribute(
                     "error", "No se pudo guardar el tipo de servicio.");
-            return "tipo-servicio/formulario";
+            return "tipoServicio/listado";
         }
-        return "redirect:/tipo-servicio";
+        return "redirect:/tipoServicio";
     }
 
     @PostMapping("/eliminar")
     public String eliminar(
-            @org.springframework.web.bind.annotation.RequestParam Integer id,
+            @RequestParam Integer id,
             RedirectAttributes redirectAttributes) {
         String atributo = "todoOk";
         String mensaje = "Tipo de servicio eliminado correctamente.";
@@ -93,6 +104,6 @@ public class TipoServicioController {
             mensaje = "Ocurrió un error al eliminar el tipo de servicio.";
         }
         redirectAttributes.addFlashAttribute(atributo, mensaje);
-        return "redirect:/tipo-servicio";
+        return "redirect:/tipoServicio";
     }
 }

@@ -1,16 +1,90 @@
-<!--Head-->
+<!-- Head -->
 <head th:fragment="head">
-    <title>Veterinaria Doggos</title>
+    <title th:text="#{plantilla.titulo}"></title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
-    <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/>
+
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet"/>
+    <link th:href="@{/css/estilos.css}"
+          rel="stylesheet"/>
+
     <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script th:src="@{/js/rutinas.js}"></script>    
+    <script th:src="@{/js/rutinas.js}"></script>
 </head>
 
-<!--Header-->
+<!-- Header -->
+<header th:fragment="header"
+        class="container-fluid bg-primary text-white p-3">
+    <h1 th:text="#{plantilla.titulo}"></h1>
+</header>
 
+<!-- Navbar -->
+<nav th:fragment="navbar"
+     class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand"
+           th:href="@{/}"
+           th:text="#{nav.inicio}"></a>
 
-<!--Footer-->
+        <div class="navbar-nav">
+            <a class="nav-link"
+               th:href="@{/tipoServicio}"
+               th:text="#{nav.tiposServicio}"></a>
+
+            <a class="nav-link"
+               th:href="@{/servicio}"
+               th:text="#{nav.servicios}"></a>
+
+            <a class="nav-link"
+               th:href="@{/cita/listado}"
+               th:text="#{nav.citas}"></a>
+
+            <a class="nav-link"
+               th:href="@{/contacto}"
+               th:text="#{nav.contacto}"></a>
+        </div>
+    </div>
+</nav>
+
+<!-- Footer -->
+<footer th:fragment="footer"
+        class="container-fluid bg-info text-white text-center p-3">
+    <span th:text="#{footer.derechos}"></span>
+</footer>
+
+<!-- ConfirmElim -->
+<div th:fragment="confirmarEliminar">
+    <div class="modal fade" id="confirmarEliminarModal" tabindex="-1"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" th:text="#{eliminar.titulo}"></h5>
+                    <button type="button" class="btn-close"
+                            data-bs-dismiss="modal"
+                            th:attr="aria-label=#{tipoServicio.cancelar}">
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <p id="mensajeEliminar"></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                            th:text="#{tipoServicio.cancelar}">
+                    </button>
+
+                    <form id="formEliminar" method="post">
+                        <input type="hidden" id="idEliminar" name="id"/>
+                        <button type="submit" class="btn btn-danger"
+                                th:text="#{tipoServicio.eliminar}">
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
